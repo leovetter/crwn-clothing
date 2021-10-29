@@ -26,8 +26,8 @@ export const createUserProfileDocument = async (authUser, additionalData) => {
 
     const db = getFirestore();
 
-    const docRef = doc(db, "user", authUser.uid);
-    const docSnap = await getDoc(docRef);
+    let docRef = doc(db, "user", authUser.uid);
+    let docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
 
@@ -43,7 +43,13 @@ export const createUserProfileDocument = async (authUser, additionalData) => {
             ...additionalData
         });
 
-    }
+        docRef = doc(db, "user", authUser.uid);
+        docSnap = await getDoc(docRef);
 
-    return docSnap.data();
+        return docSnap.data();
+
+    } else {
+
+        return docSnap.data();
+    }
 }

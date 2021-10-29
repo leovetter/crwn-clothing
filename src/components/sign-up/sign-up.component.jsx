@@ -5,7 +5,7 @@ import CustomButton from "../custom-button/custom-button.component";
 import { auth, createUserProfileDocument } from "../../firebase/firebase.util";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-import 'sign-up.styles.scss';
+import './sign-up.styles.scss';
 
 class SignUp extends React.Component {
 
@@ -31,8 +31,7 @@ class SignUp extends React.Component {
             return;
         } else {
 
-            const { user } = await createUserWithEmailAndPassword(email, password);
-            console.log(user)
+            const { user } = await createUserWithEmailAndPassword(auth, email, password);
 
             await createUserProfileDocument(user, {displayName});
 
@@ -62,7 +61,7 @@ class SignUp extends React.Component {
                 <h2 className="title">I do not have an account</h2>
                 <span>Sign up with your email and password</span>
 
-                <form action="" className="sign-up-form">
+                <form action="" className="sign-up-form" onSubmit={ this.handleSubmit }> 
 
                     <FormInput type='text'
                                name='displayName'
